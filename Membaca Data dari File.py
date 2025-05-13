@@ -1,0 +1,34 @@
+def baca_data_angka(nama_file):
+    data = []
+
+    try:
+        with open(nama_file, 'r') as file:
+            for nomor_baris, baris in enumerate(file, start=1):
+                baris = baris.strip()
+                if not baris:
+                    continue  # Lewati baris kosong
+
+                try:
+                    angka = int(baris)
+                    data.append(angka)
+                except ValueError:
+                    print(f"Format salah di baris {nomor_baris}: '{baris}' bukan angka yang valid.")
+
+    except FileNotFoundError:
+        print(f"Error: File '{nama_file}' tidak ditemukan.")
+    except PermissionError:
+        print(f"Error: Tidak memiliki izin untuk membaca file '{nama_file}'.")
+    except Exception as e:
+        print(f"Error tak terduga: {e}")
+
+    return data
+
+
+if __name__ == "__main__":
+    nama_file = "data.txt"  # Pastikan file ini ada di folder yang sama
+    hasil = baca_data_angka(nama_file)
+
+    if hasil:
+        print("Data angka yang berhasil dibaca:", hasil)
+    else:
+        print("Tidak ada data yang berhasil dibaca.")
